@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+AXON_LAUNCH_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$AXON_LAUNCH_ROOT"
+umask 077
+if [[ ! -x "$AXON_LAUNCH_ROOT/.venv/bin/python" ]]; then
+  if command -v zenity >/dev/null 2>&1; then
+    zenity --error --title='AXON' --text='Falta el entorno de AXON. Es necesario restaurar su instalación antes de abrirlo.'
+  else
+    echo 'Falta el entorno de AXON (.venv/bin/python).' >&2
+  fi
+  exit 1
+fi
+export PYTHONPATH="$AXON_LAUNCH_ROOT/backend"
+exec "$AXON_LAUNCH_ROOT/.venv/bin/python" -m app.launcher "$@"

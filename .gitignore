@@ -1,0 +1,33 @@
+# Datos y configuración local
+.env
+.env.*
+!.env.example
+*.env
+*.key
+*.pem
+*.p12
+*.sqlite*
+*.db
+*.db-*
+*.zip
+*.dump
+*.log
+*.pdf
+*.docx
+*.xlsx
+*.pptx
+/data/
+/backups/
+/output/
+/private-invitations/
+demo-credentials.txt
+
+# Dependencias y compilación
+.venv
+node_modules
+/frontend/dist/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+*.tsbuildinfo

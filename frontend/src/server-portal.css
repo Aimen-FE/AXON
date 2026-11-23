@@ -1,0 +1,45 @@
+.server-portal {
+  min-height: 100dvh;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding: clamp(16px, 5vw, 52px);
+}
+.server-top,.server-logo,.server-card-heading,.server-status,.server-open {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.server-top { justify-content: space-between; }
+.server-logo { color: var(--text); text-decoration: none; line-height: 1; font-size: 1.5rem; font-weight: 750; }
+.server-logo-dot,.server-status.connected svg,.server-card-heading svg { color: var(--green); }
+.server-logo small { display: block; color: var(--muted); font-weight: 550; font-size: .72rem; margin-top: 5px; }
+.server-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 480px);
+  align-items: center;
+  gap: clamp(26px, 7vw, 100px);
+  margin-block: clamp(36px, 12vh, 125px);
+}
+.server-heading h1 { font-size: clamp(2.3rem, 5.5vw, 4.6rem); letter-spacing: -.06em; line-height: 1; margin: 0; text-wrap: balance; }
+.server-heading p { max-width: 43ch; color: var(--muted); font-size: 1.03rem; line-height: 1.55; margin-block: 17px 24px; }
+.server-open { width: fit-content; text-decoration: none; }
+.server-card { background: var(--surface); border: 1px solid var(--line); border-radius: 19px; padding: clamp(17px, 4vw, 29px); min-width: 0; }
+.server-card-heading h2 { font-size: 1.24rem; margin: 0; }
+.server-status { flex-wrap: wrap; color: var(--muted); margin-block: 15px; }
+.server-status.connected { color: var(--text); }
+.server-status span { font-size: .83rem; color: var(--muted); }
+.server-card form { display: grid; gap: 9px; margin-block: 19px; }
+.server-card form label { font-weight: 700; }
+.server-card :is(.server-origin,.server-error) { overflow-wrap: anywhere; }
+.server-origin,.server-note { color: var(--muted); }
+.server-note { margin-bottom: 0; font-size: .87rem; line-height: 1.5; }
+.server-error { color: var(--text); border-inline-start: 3px solid #efab88; padding-inline-start: 9px; }
+@media(max-width: 780px) {
+  .server-content { grid-template-columns: 1fr; align-items: start; }
+  .server-heading { max-width: 560px; }
+}
+@media(max-width: 420px) {
+  .server-top { gap: 7px; }
+  .server-logo img { width: 32px; height: 32px; }
+  .server-top .install-axon { font-size: .82rem; }
+}
