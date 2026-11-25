@@ -1,10 +1,21 @@
 # Arquitectura
 
-## Propuesta de AXON 0.8
+## Arquitectura de AXON 0.8
 
-La fase 0 toma la versión 0.7.0 como referencia funcional. La descripción que sigue documenta esa implementación. La propuesta para la siguiente versión identifica al responsable de cada dato, las llamadas entre módulos y las condiciones para sustituirlos por etapas.
+Los registros de decisión (ADR) recogen los cinco principios aceptados para la reconstrucción y sus costes. El mapa de la fase 0 propone cómo aplicarlos a doce módulos. Las secciones a partir de «Componentes y ejecución» describen la implementación 0.7.0 que sirve de referencia.
 
-[Auditoría de la versión estable](docs/auditoria/0.8/README.md) · [Mapa de los doce módulos y sus interfaces](docs/auditoria/0.8/modulos.md) · [Plan de migración](ROADMAP.md).
+[Decisiones de arquitectura](docs/decisions/README.md) · [Mapa de módulos e interfaces](docs/auditoria/0.8/modulos.md) · [Auditoría](docs/auditoria/0.8/README.md) · [Plan de migración](ROADMAP.md).
+
+## README de cada módulo
+
+Al incorporar un módulo, crear su `README.md` junto al código. Documentar solo lo que ayude a cambiarlo con seguridad.
+
+- **Responsabilidad y datos.** Identificar componentes, datos que posee, operaciones de escritura y reglas de negocio a su cargo.
+- **Interfaz y dependencias.** Enumerar operaciones públicas, consumidores y dependencias permitidas y prohibidas. Especificar los permisos y el ámbito que comprueba cada operación sensible.
+- **Pruebas y decisiones.** Enlazar las pruebas que fijan el comportamiento y los ADR aplicables. Añadir las decisiones locales que el código por sí solo no explique.
+- **Límites y retorno.** Recoger limitaciones y trabajo pendiente. Si sustituye una implementación, explicar cómo verificar el cambio y cómo volver al comportamiento anterior.
+
+Las reglas comunes se enlazan desde el README del módulo. [Guía de trabajo](AGENTS.md) · [Propiedad entre módulos](docs/decisions/0004-module-boundaries.md).
 
 ## Componentes y ejecución
 

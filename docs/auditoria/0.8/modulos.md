@@ -62,4 +62,4 @@ frontend/public/       manifiesto, service worker y recursos públicos
 
 La estructura se creará al migrar el primer caso de uso que la necesite. Compartir una base y una cadena de migraciones preserva las transacciones actuales. El adaptador SQLite registra explícitamente las tablas del esquema. Los módulos de producto mantienen la propiedad de sus datos y las decisiones de acceso. La elección de proveedor externo, el tiempo máximo de espera y su modo de degradación quedan en cada adaptador.
 
-Cada módulo incorporado tendrá un `README.md` con responsabilidad, componentes, dependencias autorizadas, interfaces, decisiones, pruebas y límites pendientes. El [plan por fases](../../../ROADMAP.md) identifica cuándo comprobar estos contratos y cómo volver al comportamiento anterior.
+Al incorporar un módulo, documentar su contrato y su retorno siguiendo la ficha común. [Guía del README](../../../ARCHITECTURE.md#readme-de-cada-módulo) · [Decisiones adoptadas](../../decisions/README.md) · [Plan por fases](../../../ROADMAP.md).

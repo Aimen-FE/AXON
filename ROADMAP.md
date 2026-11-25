@@ -1,6 +1,8 @@
 # Plan de migración de AXON 0.8
 
-**Estado actual.** La fase 0 entrega el diagnóstico y una propuesta para revisión en `rewrite/axon-v0.8`. La referencia de comparación es [80fef73](https://github.com/Aimen-FE/AXON/commit/80fef73e734768593292a2dd20eda89755ebeaba). La siguiente decisión es revisar los límites de los módulos y autorizar expresamente el comienzo de la fase 1.
+La fase 0 fijó la referencia funcional en 0.7.0. Su borrador original sigue abierto como referencia histórica. Para consultar la auditoría tal como se entregó, usar su commit fijo. [Versión estable](https://github.com/Aimen-FE/AXON/commit/80fef73e734768593292a2dd20eda89755ebeaba) · [Auditoría en `53af113`](https://github.com/Aimen-FE/AXON/tree/53af1132918053ae931cb4222dc5b361d25b2133/docs/auditoria/0.8) · [Borrador histórico #1](https://github.com/Aimen-FE/AXON/pull/1).
+
+El complemento de fase 0 registra las decisiones de ingeniería. La fase 1 requiere autorización expresa. Las nuevas propuestas siguen la estrategia de ramas de la guía de contribución. [Decisiones vigentes](docs/decisions/README.md) · [Ramas y destinos de PR](CONTRIBUTING.md#ramas-y-pr-de-axon-08).
 
 ## Fases y criterios de salida
 
@@ -20,11 +22,17 @@
 1. Elegir un recorrido observable y documentar su propietario, consumidores, reglas de privacidad, datos, rutas y errores. Empezar por la lectura del listado de clases permite probar a la vez el límite HTTP, la identidad y el ámbito de centro.
 2. Ejecutarlo en 0.7 sobre un fixture reproducible. Guardar datos ficticios esperados por rol y añadir pruebas de caracterización donde falten respuestas o efectos. Usar el [inventario de operaciones](docs/auditoria/0.8/http.tsv) para localizar todas las entradas del recorrido.
 3. Implementar el caso de uso nuevo junto al antiguo y conectar solo la operación elegida. En lecturas, comparar resultados en paralelo. En escrituras, ejecutar cada versión en una copia separada que parta del mismo estado. Elegir un único escritor activo en la aplicación.
-4. Comparar respuestas y estado final. Incluir un actor ajeno, una operación repetida y, cuando proceda, una interrupción. Incorporar los cambios de documentación y resultados al PR pequeño del módulo. Mantener la vía anterior hasta verificar también sus consumidores indirectos.
-5. Integrar mediante PR revisado con los controles obligatorios en verde. Para retirar una vía antigua, buscar referencias en HTTP, herramientas, tareas programadas, importadores y CLI, y demostrar en los recorridos que ya usa el reemplazo. La fase siguiente requiere una decisión independiente.
+4. Comparar la versión estable y el reemplazo según el [contrato de sustitución](docs/TESTING.md#contrato-de-sustitución). Adjuntar al PR las diferencias observadas, las pruebas y el retorno previsto.
+5. Retirar la vía anterior cuando se haya completado la [verificación de consumidores](#retirada-de-código). Integrar tras la revisión y con los controles obligatorios aprobados. La fase siguiente requiere una decisión independiente.
+
+## Retirada de código
+
+Antes de eliminar una implementación, buscar sus consumidores directos e indirectos por nombre y por puntos de entrada. Comprobar rutas HTTP, herramientas de IA, registro del planificador, CLI, importadores, scripts y frontend. Incluir registros dinámicos, nombres de comandos y llamadas desde tareas programadas.
+
+Por cada entrada activa, identificar su reemplazo y ejecutar las pruebas que demuestren el comportamiento observable anterior. Dejar en el PR la búsqueda realizada, los consumidores trasladados, los resultados y el punto de retorno. Si queda una dependencia sin explicar, anotarla como pendiente de retirada. Eliminar el código antiguo una vez verificada la equivalencia y repetir las pruebas afectadas tras la eliminación.
 
 ## Cómo detener o revertir
 
-En fase 0 basta con cerrar el PR para conservar la versión estable. Las futuras fases deben reservar un punto de retorno antes de habilitar cada nuevo escritor. Si el esquema es compatible, devolver el recorrido a la implementación anterior y repetir sus pruebas. Si han entrado datos que el código anterior no puede representar, conservar la base y esas escrituras, paralizar el cambio y ensayar una migración correctora en una copia. Cada PR documentará el camino probado y la revisión del esquema que admite.
+Un cambio de fase 0 se puede descartar en su rama de documentación. Las futuras fases deben reservar un punto de retorno antes de habilitar cada nuevo escritor. Si el esquema es compatible, devolver el recorrido a la implementación anterior y repetir sus pruebas. Si han entrado datos que el código anterior no puede representar, conservar la base y esas escrituras, paralizar el cambio y ensayar una migración correctora en una copia. Cada PR documentará el camino probado y la revisión del esquema que admite.
 
-**Material de revisión.** [Hallazgos y dependencias actuales](docs/auditoria/0.8/README.md) · [Mapa e interfaces propuestas](docs/auditoria/0.8/modulos.md) · [Protocolo de datos](docs/DATABASE.md) · [Matriz de permisos](docs/SECURITY.md) · [Pruebas y propuesta de CI](docs/TESTING.md).
+**Material de revisión.** [Hallazgos y dependencias actuales](docs/auditoria/0.8/README.md) · [Mapa e interfaces propuestas](docs/auditoria/0.8/modulos.md) · [Protocolo de datos](docs/DATABASE.md) · [Matriz de permisos](docs/SECURITY.md) · [Pruebas y requisitos de CI](docs/TESTING.md).

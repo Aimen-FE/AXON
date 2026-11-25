@@ -40,8 +40,34 @@ Para incluir las tres pruebas opcionales, indicar en `AXON_MEDIA_MODELS_DIR` la 
 | Trabajos, informes y administración | `test_operations`, `test_operations03`, `test_backup`, `test_teacher_launch`, `test_portable_import` | Simular interrupción durante una transacción y reanudación del trabajo. Restaurar en un segundo directorio y comparar documentos, FTS y aislamiento. |
 | Aplicación y Pages | `test_pages_connection`, `test_operations` y el [verificador del artefacto](../frontend/scripts/check-pages.mjs) cubren orígenes, rutas y archivos | Automatizar en CI el recorrido actual en navegador y la actualización entre dos versiones de caché. Ensayar identificación y cierre de sesión en el origen de la aplicación y apertura instalada en dispositivos reales. |
 
-## Criterio propuesto para los PR
+## Contrato de sustitución
 
-En fase 1, un flujo de comprobación activado por PR instalará versiones fijadas, verificará estilo y tipos en los límites nuevos, compilará las dos variantes y ejecutará pytest tras la compilación local. Incluirá una prueba de arranque desde una base vacía y la comparación de contratos del módulo que cambie. Los modelos pesados tendrán una ejecución de aceptación identificable, con constancia expresa de las pruebas omitidas. La publicación de Pages conservará su propio flujo.
+Antes de cambiar un recorrido, ejecutarlo en 0.7 con datos ficticios y guardar petición, actor, centro, estado inicial, respuesta y estado final. Repetirlo en el candidato desde condiciones equivalentes. Cubrir éxito y errores, distintos roles, acceso a recursos ajenos y aislamiento entre dos centros.
 
-Para cada cambio guardar pares de ejemplos sintéticos con petición, respuesta, actor y efectos observables. Normalizar únicamente identificadores generados y reloj mediante correspondencias explícitas. Comparar campos, permisos, códigos, tipos de contenido, caducidad, filas relacionadas y bytes de los adjuntos. Un cambio intencionado requiere documentar el contrato nuevo, sus consumidores y su prueba antes de integrar.
+| Comparación | Evidencia que se conserva |
+| --- | --- |
+| Respuesta HTTP | Código, campos JSON, tipos y orden de resultados, cuerpo de error, cabeceras relevantes y atributos de cookie. |
+| Visibilidad y archivos | Recursos, campos y adjuntos que ve cada actor, permisos denegados, nombre, tipo y bytes de las descargas. |
+| Efectos persistentes | Altas y cambios de filas, relaciones, archivos guardados y avisos por destinatario. Verificar el estado después de un fallo o reintento cuando corresponda. |
+
+Normalizar únicamente identificadores generados y reloj mediante correspondencias explícitas. Si un 200 devuelve una entrega ajena o genera dos avisos, la comparación falla. Toda diferencia intencionada necesita contrato, consumidores y prueba actualizados. [Decisión de migración](decisions/0005-progressive-migration.md).
+
+## GitHub Actions desde la fase 1
+
+Cada PR de 0.8 deberá activar comprobaciones de GitHub Actions para su rama de destino. Conservar el despliegue de Pages en su propio flujo. El mínimo obligatorio comprende lo siguiente.
+
+1. Usar las versiones de Python y Node indicadas en esta guía e instalar las dependencias fijadas del servidor y del cliente. [Dependencias del servidor](../backend/requirements.lock) · [Dependencias del frontend](../frontend/pnpm-lock.yaml).
+2. Comprobar tipado y calidad, compilar la aplicación en `frontend/dist` y compilar Pages en otro directorio con el verificador de su artefacto.
+3. Arrancar con una base vacía, ejecutar la batería backend tras la compilación local y las pruebas de contrato del módulo modificado.
+4. Ejecutar los controles de arquitectura ya introducidos en 0.8, incluidas las restricciones de dependencias que se hayan incorporado. Vincular los resultados obligatorios al commit del PR antes de integrarlo.
+
+Las pruebas que necesitan modelos pesados o hardware local se ejecutan como aceptación separada. Registrar el equipo o modelo necesario y el resultado real, también cuando falte ese recurso.
+
+## Cómo informar de los resultados
+
+| Categoría | Qué indicar en el PR y en el cierre |
+| --- | --- |
+| CI verificado | Enlace a la ejecución de GitHub Actions para el commit y conclusión de sus trabajos. |
+| Prueba local | Comando o comprobación automatizada ejecutada en el equipo, revisión y resultado. |
+| Prueba manual | Recorrido hecho por una persona, entorno y observación comprobada. |
+| Prueba no realizada | Comprobación pendiente u omitida y motivo concreto. |
