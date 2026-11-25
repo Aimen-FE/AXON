@@ -1,0 +1,10 @@
+# Trabajar en AXON
+
+1. Consultar este archivo, identificar la fase autorizada en [el plan](ROADMAP.md) y leer solo la documentación pertinente al cambio. Antes de editar, explicar brevemente el recorrido, los módulos y archivos afectados.
+2. Preservar el comportamiento de la referencia estable y las instalaciones existentes. Usar datos exclusivamente ficticios en pruebas, ejemplos y demostraciones. Comprobar que la inicialización de ejemplos utiliza un destino independiente.
+3. Trabajar en una rama, realizar commits pequeños y proponer la integración mediante PR. Evitar cambios directos en `main`, reescrituras del historial o modificaciones de bases de usuarios como parte de pruebas. Cada fase termina con resultados y pendientes propios.
+4. Escribir identificadores en inglés y textos visibles en español, manteniendo las opciones de idioma existentes. En Python usar `snake_case` para funciones y `PascalCase` para clases. En TypeScript usar `camelCase` para funciones y `PascalCase` para tipos y componentes. Conservar las interfaces públicas documentadas.
+5. Dar una responsabilidad principal a cada archivo. Una extensión habitual de 200–400 líneas es orientativa. Revisar los que superen 500. Documentar el motivo y las alternativas si alguno necesita superar 1000. Dividir por responsabilidad, aplicar tipos y validar los límites de entrada.
+6. Reutilizar código con comportamiento probado. Introducir dependencias o abstracciones cuando resuelvan un requisito concreto. Buscar duplicaciones y justificar con sus consumidores y pruebas la retirada de código.
+7. Al incorporar un módulo, documentar en su `README.md` responsabilidad, componentes, dependencias, interfaces, decisiones, pruebas y limitaciones. Actualizar las guías afectadas y el registro de cambios junto al código.
+8. Ejecutar las pruebas del recorrido y sus controles compartidos. En el PR indicar qué pasó, qué se omitió y cómo volver a la referencia. Integrar una vez revisadas las diferencias funcionales y aprobados los controles obligatorios.

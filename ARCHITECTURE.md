@@ -1,5 +1,11 @@
 # Arquitectura
 
+## Propuesta de AXON 0.8
+
+La fase 0 toma la versión 0.7.0 como referencia funcional. La descripción que sigue documenta esa implementación. La propuesta para la siguiente versión identifica al responsable de cada dato, las llamadas entre módulos y las condiciones para sustituirlos por etapas.
+
+[Auditoría de la versión estable](docs/auditoria/0.8/README.md) · [Mapa de los doce módulos y sus interfaces](docs/auditoria/0.8/modulos.md) · [Plan de migración](ROADMAP.md).
+
 ## Componentes y ejecución
 
 FastAPI sirve los recursos compilados de React y la API desde el mismo origen. SQLite con WAL guarda las cuentas y los datos. El instalador crea el esquema y el asistente local configura el administrador. Ollama, las operaciones de OCR, voz y matemáticas y las descargas con procedencia actúan como servicios o procesos delimitados. Se pueden ejecutar perfiles de demostración aislados e independientes de la instalación principal.
